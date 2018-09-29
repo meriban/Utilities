@@ -17,7 +17,7 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle("Utilities");
+        stage.setTitle(java.util.ResourceBundle.getBundle("lang/eng").getString("APPLICATION_NAME"));
         stage.setScene(scene);
         stage.show();
     }
