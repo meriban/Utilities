@@ -8,11 +8,11 @@ package com.mycompany.utilities.functions;
 import com.mycompany.utilities.utils.ParseResult;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.control.TextArea;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 
 /**
  *
@@ -42,19 +42,16 @@ public class BarcodeQueryMaker {
             + "  ]\n"
             + "}";
 
-    TextArea myIn;
-    TextArea myOut;
-    Text myErrors;
     String myText;
     ParseResult myParseResult;
+    ClipboardContent myClipboardContent = new ClipboardContent();
 
-    public BarcodeQueryMaker(TextArea in, TextArea out, Text errors) {
-        myIn = in;
-        myOut = out;
-        myErrors = errors;
-        myText = myIn.getText();
-    }
-
+    /**
+     * Initialises a new <code>BarcodeQueryMaker</code> object and triggers
+     * parsing.
+     * 
+     * @param text the String to be parsed
+     */
     public BarcodeQueryMaker(String text) {
         myText = text;
         myParseResult = parse();
@@ -175,12 +172,13 @@ public class BarcodeQueryMaker {
             return parseResult;
         }
     }
-    
+
     /**
      * Validates a barcode.
-     * 
+     *
      * Valid barcodes consists of either 10 or 14 characters, all of which need
      * to be either 0-9 or x or X.
+     *
      * @param string the barcode to be validated.
      * @return <code>true</code> if barcode is valid.
      */
@@ -193,15 +191,14 @@ public class BarcodeQueryMaker {
         System.out.println("Matcher14: " + matcher14.matches());
         return matcher10.matches() || matcher14.matches();
     }
-    
+
     /**
      * Parses the JSON for a valid barcode that is not the last to be parsed.
-     * 
+     *
      * If the barcode is not not the last in the list of barcodes to be parsed
-     * it needs a comma inserted between the surrounding "" and carriage 
-     * return/line break.
-     * E.g. 1918111445 becomes "1918111445",\r\n
-     * 
+     * it needs a comma inserted between the surrounding "" and carriage
+     * return/line break. E.g. 1918111445 becomes "1918111445",\r\n
+     *
      * @param string the barcode to be parsed
      * @return the parsed barcode
      */
@@ -215,11 +212,11 @@ public class BarcodeQueryMaker {
 
     /**
      * Parses the JSON for the last valid barcode to be parsed.
-     * 
-     * If the barcode is the last to be parsed no comma is added between the 
-     * surrounding "" and carriage return/line break.
-     * E.g. 1918111445 becomes "1918111445"\r\n
-     * 
+     *
+     * If the barcode is the last to be parsed no comma is added between the
+     * surrounding "" and carriage return/line break. E.g. 1918111445 becomes
+     * "1918111445"\r\n
+     *
      * @param string the barcode to the parsed
      * @return the parsed barcode
      */
@@ -231,36 +228,95 @@ public class BarcodeQueryMaker {
         return out;
     }
 
-    public String getParsedString(){
+    /**
+     * Gets the parsed JSON query.
+     *
+     * If no valid barcodes were entered or found this is <code>null</code>.
+     *
+     * @return The parsed JSON query
+     */
+    public String getParsedString() {
         return myParseResult.getParsedString();
     }
-    
-    public Color getErrorStatus(){
-        if (myParseResult.getSoundness()==ParseResult.NO_ERRORS){
-            return Color.GREEN;
-        }else{
-            return Color.RED;
-        }
+
+    /**
+     * Gets the error status of the {@link ParseResult}.
+     *
+     * @return Returns <code>true</code> if no errors occurred during parsing.
+     */
+    public boolean getErrorStatus() {
+        return myParseResult.getSoundness() == ParseResult.NO_ERRORS;
     }
-    
-    public String getErrorReport(){
-        switch(myParseResult.getSoundness()){
+
+    /**
+     * Gets the error report.
+     *
+     * If any invalid barcodes were encountered during parsing they are included
+     * in this report.
+     * 
+     * @param language the {@link ResourceBundle} for the language the report
+ is to be compiled in.
+     *
+     * @return the error report
+     */
+    public String getErrorDetail(ResourceBundle language) {
+        switch (myParseResult.getSoundness()) {
             case ParseResult.NO_INPUT:
-                return java.util.ResourceBundle.getBundle("lang/eng").getString("NO_INPUT");
+                return language.getString("NO_INPUT");
             case ParseResult.NO_ERRORS:
-                return java.util.ResourceBundle.getBundle("lang/eng").getString("NO_ERROR");
+                return language.getString("NO_ERROR");
             case ParseResult.SOME_ERRORS:
                 StringBuilder builder = new StringBuilder();
-                builder.append(java.util.ResourceBundle.getBundle("lang/eng").getString("SOME_ERRORS")).append("\n");
-                for (String barcode : myParseResult.getErrorReport()){
+                builder.append(language.getString("SOME_ERRORS")).append("\n");
+                for (String barcode : myParseResult.getErrorReport()) {
                     builder.append(barcode).append("\n");
                 }
                 return builder.toString();
-            case ParseResult.ALL_ERRORS:                
-                return java.util.ResourceBundle.getBundle("lang/eng").getString("NO_VALID_INPUT");
+            case ParseResult.ALL_ERRORS:
+                return language.getString("NO_VALID_INPUT");
             default:
                 return null;
         }
+    }
+    
+    /**
+     * Copies the parsed JSON query to the {@link Clipboard}.
+     * 
+     * Call this if no object referencing the query is already available.
+     * Otherwise use {@link #queryToClipboard(javafx.scene.input.Clipboard, java.lang.String)}
+     * 
+     * @param clipboard the <code>clipboard</code>
+     */
+    public void queryToClipboard(Clipboard clipboard){
+        myClipboardContent.clear();
+        myClipboardContent.putString(getParsedString());
+        clipboard.setContent(myClipboardContent);
+    }
+    
+    /**
+     * Copies the parsed JSON query to the {@link Clipboard}.
+     * 
+     * Call this if an object referencing the query is already available. 
+     * Otherwise use {@link #queryToClipboard(javafx.scene.input.Clipboard)}
+     * 
+     * @param clipboard the <code>clipboard</code>
+     * @param query the string to be copied to the <code>clipboard</code>
+     */
+    public void queryToClipboard(Clipboard clipboard, String query){
+        myClipboardContent.clear();
+        myClipboardContent.putString(query);
+        clipboard.setContent(myClipboardContent);
+    }
+    
+    /**
+     * Copies the error report to the {@link Clipboard}.
+     * 
+     * @param clipboard the <code>clipboard</code>. 
+     */
+    public void errorReportToClipboard(Clipboard clipboard){
+//        myClipboardContent.clear();
+//        myClipboardContent.putString(getErrorDetail());
+//        clipboard.setContent(myClipboardContent);
     }
 
 }

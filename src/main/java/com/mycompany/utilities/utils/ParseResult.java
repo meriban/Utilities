@@ -19,8 +19,8 @@ public class ParseResult {
     public static final int NO_INPUT = 3;
     
     int soundness = 0;
-    ArrayList<String> errorReport;
-    String parsedString;
+    ArrayList<String> errorReport = null;
+    String parsedString = null;
     
     public void setSoundness(int s){
         soundness = s;

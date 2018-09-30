@@ -1,5 +1,6 @@
 package com.mycompany.utilities;
 
+import java.util.ResourceBundle;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -12,12 +13,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        ResourceBundle engBundle = ResourceBundle.getBundle("lang/eng");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"),engBundle);
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        stage.setTitle(java.util.ResourceBundle.getBundle("lang/eng").getString("APPLICATION_NAME"));
+        stage.setTitle(engBundle.getString("APPLICATION_NAME"));
         stage.setScene(scene);
         stage.show();
     }

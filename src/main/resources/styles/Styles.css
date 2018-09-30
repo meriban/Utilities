@@ -1,13 +1,15 @@
-.button {
-    
-    
-}
-
 .button-main {
     -fx-font-weight: bold;
     -fx-background-color: #3399ff;
     -fx-text-fill:white;
 }
+.button-menu {
+    -fx-wrap-text: true;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 150px;
+    -fx-text-alignment:center;
+}
+
 .separator:vertical {
     min-width: 16em;
     max-width: 16em;
@@ -16,12 +18,4 @@
 .separator:horizontal {
     min-height: 16em;
     max-height: 16em;
-}
-
-.text:error{
-    -fx-fill:red;
-}
-
-.text:noerror{
-    -fx-fill:green;
 }

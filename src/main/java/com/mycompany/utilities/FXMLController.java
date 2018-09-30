@@ -3,16 +3,21 @@ package com.mycompany.utilities;
 import com.mycompany.utilities.functions.BarcodeQueryMaker;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class FXMLController implements Initializable {
 
-    //private static final PseudoClass ERROR = PseudoClass.getPseudoClass(java.util.ResourceBundle.getBundle("lang/test").getString("ERROR"));
-    //private static final PseudoClass NO_ERROR = PseudoClass.getPseudoClass(java.util.ResourceBundle.getBundle("lang/test").getString("NOERROR"));
+    @FXML
+    private ChoiceBox function;
     @FXML
     private TextArea bqmInputArea;
     @FXML
@@ -22,13 +27,26 @@ public class FXMLController implements Initializable {
     @FXML
     private Text infoText;
 
+    final private Clipboard clipboard = Clipboard.getSystemClipboard();
+    private ClipboardContent clipboardContent = new ClipboardContent();
+    private static ResourceBundle language = ResourceBundle.getBundle("lang/eng");
+    private BarcodeQueryMaker bqm = null;
+
     @FXML
     private void handleBQMFormatButtonAction(ActionEvent event) {
         bqmOutputArea.clear();
-        BarcodeQueryMaker bqm = new BarcodeQueryMaker(bqmInputArea.getText());
-        bqmOutputArea.setText(bqm.getParsedString());
-        bqmErrorText.setFill(bqm.getErrorStatus());
-        bqmErrorText.setText(bqm.getErrorReport());
+        bqm = new BarcodeQueryMaker(bqmInputArea.getText());
+        String parsedString = bqm.getParsedString();
+        bqmOutputArea.setText(parsedString);
+        if (bqm.getErrorStatus()) {
+            bqmErrorText.setFill(Color.GREEN);
+        } else {
+            bqmErrorText.setFill(Color.RED);
+        }
+        bqmErrorText.setText(bqm.getErrorDetail(language));
+
+        bqm.queryToClipboard(clipboard, parsedString);
+        infoText.setText(language.getString("BQM_QUERY_CLIPBOARD"));
     }
 
     @FXML
@@ -38,8 +56,32 @@ public class FXMLController implements Initializable {
         bqmErrorText.setText("");
     }
 
+    @FXML
+    private void handleBQMQueryToClipboardButtonAction(ActionEvent event) {
+        clipboardContent.clear();
+        clipboardContent.putString(bqmOutputArea.getText());
+        clipboard.setContent(clipboardContent);
+        infoText.setText(language.getString("BQM_QUERY_CLIPBOARD"));
+    }
+
+    @FXML
+    private void handleBQMErrorReportToClipboardButtonAction(ActionEvent event) {
+        clipboardContent.clear();
+        clipboardContent.putString(bqmErrorText.getText());
+        infoText.setText(language.getString("BQM_ERROR_REPORT_CLIPBOARD"));
+        clipboard.setContent(clipboardContent);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        try{
+            function.setItems(FXCollections.observableArrayList(
+                    language.getString("BMQ"),
+                    language.getString("ANOTHER")));
+            function.setValue(language.getString("BMQ"));
+        }catch (NullPointerException e){
+            System.out.println(e.toString());
+        }
     }
+
 }
