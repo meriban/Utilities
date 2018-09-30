@@ -3,11 +3,24 @@
     -fx-background-color: #3399ff;
     -fx-text-fill:white;
 }
-.button-menu {
+
+.function-button {
     -fx-wrap-text: true;
-    -fx-pref-width: 150px;
-    -fx-pref-height: 150px;
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+    -fx-max-width: 100px;
+    -fx-max-height: 100px;
+    -fx-min-width: 100px;
+    -fx-min-height: 100px;
     -fx-text-alignment:center;
+    -fx-content-display:top;
+    -fx-graphic-text-gap:0;
+}
+
+.function-button:running {
+    -fx-font-weight: bold;
+    -fx-background-color: #3399ff;
+    -fx-text-fill:white;
 }
 
 .separator:vertical {

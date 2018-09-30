@@ -1,12 +1,17 @@
 package com.mycompany.utilities;
 
+import com.mycompany.utilities.controls.FunctionButton;
 import com.mycompany.utilities.functions.BarcodeQueryMaker;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
@@ -17,21 +22,33 @@ import javafx.scene.text.Text;
 public class FXMLController implements Initializable {
 
     @FXML
-    private ChoiceBox function;
-    @FXML
-    private TextArea bqmInputArea;
-    @FXML
-    private TextArea bqmOutputArea;
+    private FunctionButton bqmButton;
     @FXML
     private Text bqmErrorText;
     @FXML
     private Text infoText;
+    @FXML
+    private TextArea bqmInputArea;
+    @FXML
+    private TextArea bqmOutputArea;
 
     final private Clipboard clipboard = Clipboard.getSystemClipboard();
     private ClipboardContent clipboardContent = new ClipboardContent();
     private static ResourceBundle language = ResourceBundle.getBundle("lang/eng");
     private BarcodeQueryMaker bqm = null;
+    private ArrayList<FunctionButton> functionButtons = new ArrayList<>();
 
+    @FXML
+    private void handleBQMButtonAction(ActionEvent event){
+        if (!bqmButton.isRunning()){
+            for (FunctionButton button : functionButtons){
+                button.setRunning(false);
+            }
+            bqmButton.setRunning(true);
+            //TODO: show correct pane
+        }
+    }
+    
     @FXML
     private void handleBQMFormatButtonAction(ActionEvent event) {
         bqmOutputArea.clear();
@@ -74,14 +91,7 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try{
-            function.setItems(FXCollections.observableArrayList(
-                    language.getString("BMQ"),
-                    language.getString("ANOTHER")));
-            function.setValue(language.getString("BMQ"));
-        }catch (NullPointerException e){
-            System.out.println(e.toString());
-        }
+        //bqmButton.pseudoClassStateChanged(, true);
     }
 
 }
