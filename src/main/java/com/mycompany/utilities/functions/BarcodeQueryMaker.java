@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
 /**
