@@ -1,0 +1,4 @@
+com\mycompany\utilities\functions\BarcodeQueryMaker.class
+com\mycompany\utilities\MainApp.class
+com\mycompany\utilities\FXMLController.class
+com\mycompany\utilities\utils\ParseResult.class

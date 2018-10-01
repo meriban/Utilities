@@ -278,45 +278,4 @@ public class BarcodeQueryMaker {
                 return null;
         }
     }
-    
-    /**
-     * Copies the parsed JSON query to the {@link Clipboard}.
-     * 
-     * Call this if no object referencing the query is already available.
-     * Otherwise use {@link #queryToClipboard(javafx.scene.input.Clipboard, java.lang.String)}
-     * 
-     * @param clipboard the <code>clipboard</code>
-     */
-    public void queryToClipboard(Clipboard clipboard){
-        myClipboardContent.clear();
-        myClipboardContent.putString(getParsedString());
-        clipboard.setContent(myClipboardContent);
-    }
-    
-    /**
-     * Copies the parsed JSON query to the {@link Clipboard}.
-     * 
-     * Call this if an object referencing the query is already available. 
-     * Otherwise use {@link #queryToClipboard(javafx.scene.input.Clipboard)}
-     * 
-     * @param clipboard the <code>clipboard</code>
-     * @param query the string to be copied to the <code>clipboard</code>
-     */
-    public void queryToClipboard(Clipboard clipboard, String query){
-        myClipboardContent.clear();
-        myClipboardContent.putString(query);
-        clipboard.setContent(myClipboardContent);
-    }
-    
-    /**
-     * Copies the error report to the {@link Clipboard}.
-     * 
-     * @param clipboard the <code>clipboard</code>. 
-     */
-    public void errorReportToClipboard(Clipboard clipboard){
-//        myClipboardContent.clear();
-//        myClipboardContent.putString(getErrorDetail());
-//        clipboard.setContent(myClipboardContent);
-    }
-
 }
