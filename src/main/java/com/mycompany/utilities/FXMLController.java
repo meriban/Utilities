@@ -13,7 +13,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.paint.Color;
@@ -21,8 +24,8 @@ import javafx.scene.text.Text;
 
 public class FXMLController implements Initializable {
 
-    @FXML
-    private FunctionButton bqmButton;
+//    @FXML
+//    private FunctionButton bqmButton;
     @FXML
     private Text bqmErrorText;
     @FXML
@@ -31,23 +34,27 @@ public class FXMLController implements Initializable {
     private TextArea bqmInputArea;
     @FXML
     private TextArea bqmOutputArea;
-
+    @FXML
+    private ToggleButton bqmButton;
+    @FXML
+    private ToggleButton anotherButton;
+    
     final private Clipboard clipboard = Clipboard.getSystemClipboard();
     private ClipboardContent clipboardContent = new ClipboardContent();
     private static ResourceBundle language = ResourceBundle.getBundle("lang/eng");
     private BarcodeQueryMaker bqm = null;
-    private ArrayList<FunctionButton> functionButtons = new ArrayList<>();
+    private final ToggleGroup functions = new ToggleGroup();
 
-    @FXML
-    private void handleBQMButtonAction(ActionEvent event){
-        if (!bqmButton.isRunning()){
-            for (FunctionButton button : functionButtons){
-                button.setRunning(false);
-            }
-            bqmButton.setRunning(true);
-            //TODO: show correct pane
-        }
-    }
+//    @FXML
+//    private void handleBQMButtonAction(ActionEvent event){
+//        if (!bqmButton.isRunning()){
+//            for (FunctionButton button : functionButtons){
+//                button.setRunning(false);
+//            }
+//            bqmButton.setRunning(true);
+//            //TODO: show correct pane
+//        }
+//    }
     
     @FXML
     private void handleBQMFormatButtonAction(ActionEvent event) {
@@ -91,6 +98,8 @@ public class FXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        bqmButton.setToggleGroup(functions);
+        anotherButton.setToggleGroup(functions);
         //bqmButton.pseudoClassStateChanged(, true);
     }
 

@@ -37,15 +37,16 @@
             </MenuBar>
             <HBox VBox.vgrow="ALWAYS">
                <children>
-				  <FunctionButton fx:id="bqmButton" mnemonicParsing="false" onAction="#handleBQMButtonAction" running="true" text="%BMQ_BUTTON">
+                  <ToggleButton fx:id="bqmButton" mnemonicParsing="false" selected="true" text="%BMQ_BUTTON">
                      <graphic>
                         <ImageView pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../img/barcode64_white.png" />
                            </image>
                         </ImageView>
-                     </graphic></FunctionButton>
-                  <Button mnemonicParsing="false" styleClass="button-menu" text="%ANOTHER" />
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton fx:id="anotherButton" mnemonicParsing="false" text="%ANOTHER" />
                </children>
             </HBox>
             <TitledPane animated="false" collapsible="false" text="%BMQ">
@@ -96,19 +97,6 @@
               </content>
             </TitledPane>
             <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="i am a text" />
-            <BorderPane>
-               <center>
-                  <VBox BorderPane.alignment="CENTER">
-                     <children>
-                        <TitledPane animated="false" expanded="false" text="Another function">
-                          <content>
-                            <AnchorPane />
-                          </content>
-                        </TitledPane>
-                     </children>
-                  </VBox>
-               </center>
-            </BorderPane>
          </children>
       </VBox>
     </children>
