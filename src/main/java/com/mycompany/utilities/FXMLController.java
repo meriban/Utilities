@@ -15,10 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -27,17 +29,16 @@ public class FXMLController implements Initializable {
 //    @FXML
 //    private FunctionButton bqmButton;
     @FXML
-    private Text bqmErrorText;
+    private StackPane stackPane;
     @FXML
-    private Text infoText;
+    private Text bqmErrorText, infoText;
     @FXML
-    private TextArea bqmInputArea;
+    private TextArea bqmInputArea, bqmOutputArea;
     @FXML
-    private TextArea bqmOutputArea;
+    private TitledPane bqmPane, anotherPane;
     @FXML
-    private ToggleButton bqmButton;
-    @FXML
-    private ToggleButton anotherButton;
+    private ToggleButton bqmButton, anotherButton;
+  
     
     final private Clipboard clipboard = Clipboard.getSystemClipboard();
     private ClipboardContent clipboardContent = new ClipboardContent();
@@ -100,6 +101,7 @@ public class FXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         bqmButton.setToggleGroup(functions);
         anotherButton.setToggleGroup(functions);
+        //stackPane.getChildren().addAll(bqmPane, anotherPane);
         //bqmButton.pseudoClassStateChanged(, true);
     }
 

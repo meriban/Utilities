@@ -49,53 +49,62 @@
                   <ToggleButton fx:id="anotherButton" mnemonicParsing="false" text="%ANOTHER" />
                </children>
             </HBox>
-            <TitledPane animated="false" collapsible="false" text="%BMQ">
-              <content>
-                <AnchorPane>
-                     <children>
-                        <VBox layoutX="19.200000762939453" layoutY="19.200000762939453" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane fx:id="stackPane">
+               <children>
+                  <TitledPane fx:id="bqmPane" animated="false" collapsible="false" text="%BMQ">
+                    <content>
+                      <AnchorPane>
                            <children>
-                              <HBox AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox layoutX="19.200000762939453" layoutY="19.200000762939453" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <TextArea fx:id="bqmInputArea" maxWidth="200.0" minHeight="200.0" minWidth="200.0" />
-                                    <Separator HBox.hgrow="NEVER" />
-                                    <TextArea fx:id="bqmOutputArea" editable="false" maxWidth="200.0" minHeight="200.0" minWidth="200.0" />
-                                    <BorderPane>
-                                       <center>
-                                          <VBox alignment="BOTTOM_CENTER" spacing="8.0" BorderPane.alignment="CENTER">
-                                             <children>
-                                                  <Button alignment="CENTER" defaultButton="true" onAction="#handleBQMFormatButtonAction" styleClass="button-main" text="%BMQ_FORMAT_BUTTON" />
-                                                <Button mnemonicParsing="false" onAction="#handleBQMQueryToClipboardButtonAction" text="%BMQ_QUERY_BUTTON" />
-                                                <Button mnemonicParsing="false" onAction="#handleBQMErrorReportToClipboardButtonAction" text="%BMQ_ERROR_BUTTON" />
-                                                <Button cancelButton="true" mnemonicParsing="false" onAction="#handleBQMClearButtonAction" text="%BMQ_CLEAR_BUTTON">
-                                                   <graphic>
-                                                      <ImageView pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@../img/bin16.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                             </children>
-                                          </VBox>
-                                       </center>
-                                       <left>
-                                          <Pane maxWidth="16.0" minWidth="16.0" BorderPane.alignment="CENTER" />
-                                       </left>
-                                    </BorderPane>
+                                    <HBox AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <TextArea fx:id="bqmInputArea" maxWidth="200.0" minHeight="200.0" minWidth="200.0" />
+                                          <Separator HBox.hgrow="NEVER" />
+                                          <TextArea fx:id="bqmOutputArea" editable="false" maxWidth="200.0" minHeight="200.0" minWidth="200.0" />
+                                          <BorderPane>
+                                             <center>
+                                                <VBox alignment="BOTTOM_CENTER" spacing="8.0" BorderPane.alignment="CENTER">
+                                                   <children>
+                                                        <Button alignment="CENTER" defaultButton="true" onAction="#handleBQMFormatButtonAction" styleClass="button-main" text="%BMQ_FORMAT_BUTTON" />
+                                                      <Button mnemonicParsing="false" onAction="#handleBQMQueryToClipboardButtonAction" text="%BMQ_QUERY_BUTTON" />
+                                                      <Button mnemonicParsing="false" onAction="#handleBQMErrorReportToClipboardButtonAction" text="%BMQ_ERROR_BUTTON" />
+                                                      <Button cancelButton="true" mnemonicParsing="false" onAction="#handleBQMClearButtonAction" text="%BMQ_CLEAR_BUTTON">
+                                                         <graphic>
+                                                            <ImageView pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../img/bin16.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </VBox>
+                                             </center>
+                                             <left>
+                                                <Pane maxWidth="16.0" minWidth="16.0" BorderPane.alignment="CENTER" />
+                                             </left>
+                                          </BorderPane>
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" minHeight="100.0" prefViewportHeight="31.921875" prefViewportWidth="44.2734375">
+                                       <content>
+                                          <Text fx:id="bqmErrorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="410.0" />
+                                       </content>
+                                    </ScrollPane>
                                  </children>
-                              </HBox>
-                              <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" minHeight="100.0" prefViewportHeight="31.921875" prefViewportWidth="44.2734375">
-                                 <content>
-                                    <Text fx:id="bqmErrorText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="410.0" />
-                                 </content>
-                              </ScrollPane>
+                              </VBox>
                            </children>
-                        </VBox>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </TitledPane>
+                        </AnchorPane>
+                    </content>
+                  </TitledPane>
+                  <TitledPane fx:id="anotherPane" animated="false" collapsible="false" text="%ANOTHER">
+                    <content>
+                      <AnchorPane />
+                    </content>
+                  </TitledPane>
+               </children>
+            </StackPane>
             <Text fx:id="infoText" strokeType="OUTSIDE" strokeWidth="0.0" text="i am a text" />
          </children>
       </VBox>
